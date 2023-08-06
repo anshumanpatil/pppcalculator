@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
+import 'package:pppcalculator/constants.dart';
 
 class TextInputField extends StatelessWidget {
   final TextEditingController controller;

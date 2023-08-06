@@ -6,6 +6,7 @@ import 'package:pppcalculator/view/screens/auth/signup_screen.dart';
 
 import 'constants.dart';
 import 'controller/auth_controller.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      builder: EasyLoading.init(),
       title: 'PPP Calculator',
       debugShowCheckedModeBanner: false,
       theme:

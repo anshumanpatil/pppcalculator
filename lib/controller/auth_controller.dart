@@ -5,10 +5,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../model/user.dart';
-import '../view/screens/calculator/home.dart';
-import '../view/screens/auth/login_screen.dart';
-import '../view/screens/auth/signup_screen.dart';
+import 'package:pppcalculator/model/user.dart';
+import 'package:pppcalculator/view/screens/auth/loging_stage.dart';
+import 'package:pppcalculator/view/screens/calculator/home.dart';
+import 'package:pppcalculator/view/screens/auth/signup_screen.dart';
+
+import 'package:pppcalculator/model/aync_response.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -17,13 +19,12 @@ class AuthController extends GetxController {
   Future<String> pickImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     final img = File(image!.path);
-    print("IMAGE PICKED SUCCESSFULLY");
-    print(image!.path);
     this.proimg = img;
-    return Future.delayed(Duration(seconds: 0), () => image!.path);
+    return image.path;
   }
 
   late Rx<User?> _user;
+
   @override
   void onReady() {
     // TODO: implement onReady
@@ -36,7 +37,7 @@ class AuthController extends GetxController {
 
   _setInitialView(User? user) {
     if (user == null) {
-      Get.offAll(() => LoginScreen());
+      Get.offAll(() => LoginStage());
     } else {
       Get.offAll(() => HomeScreen());
     }
@@ -44,7 +45,7 @@ class AuthController extends GetxController {
 
   //User Register
 
-  void SignUp(
+  Future<AsyncResponseStatus> SignUp(
       String username, String email, String password, File? image) async {
     try {
       if (username.isNotEmpty &&
@@ -54,7 +55,7 @@ class AuthController extends GetxController {
         UserCredential credential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         String downloadUrl = "";
-        if(image != null) {
+        if (image != null) {
           downloadUrl = await _uploadProPic(image);
         }
         myUser user = myUser(
@@ -67,13 +68,15 @@ class AuthController extends GetxController {
             .collection('users')
             .doc(credential.user!.uid)
             .set(user.toJson());
+        return AsyncResponseStatus(success: true, errorTitle: "", errorDesc: "");
       } else {
-        Get.snackbar("Error", "All fields are mandatory");
+        // Get.snackbar("Error", "All fields are mandatory");
+        return AsyncResponseStatus(success: false, errorTitle: "Error", errorDesc: "All fields are mandatory");
       }
     } catch (e) {
       print(e);
-      print("Error Occurred username "+username);
-      Get.snackbar("Error Occurred", e.toString());
+      // Get.snackbar("Error Occurred", e.toString());
+      return AsyncResponseStatus(success: false, errorTitle: "Error", errorDesc: e.toString());
     }
   }
 
@@ -93,16 +96,25 @@ class AuthController extends GetxController {
     Get.offAll(() => SignUpScreen());
   }
 
-  void login(String email, String password) async {
+  Future<AsyncResponseStatus> login(String email, String password) async {
+    AsyncResponseStatus _asyncResponseStatus = AsyncResponseStatus(success: false, errorTitle: "", errorDesc: "");
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email, password: password);
+        await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+        _asyncResponseStatus.success = true;
+        return _asyncResponseStatus;
       } else {
-        Get.snackbar("Error Logging In", "Please enter all the fields");
+        _asyncResponseStatus.success = false;
+        _asyncResponseStatus.errorTitle = "Error In Login.";
+        _asyncResponseStatus.errorDesc = "Username & Password are required!";
+        return _asyncResponseStatus;
       }
     } catch (e) {
-      Get.snackbar("Error Logging In", e.toString());
+      // Get.snackbar("Error Logging In", e.toString());
+      _asyncResponseStatus.success = false;
+      _asyncResponseStatus.errorTitle = "Error In Login.";
+      _asyncResponseStatus.errorDesc = e.toString();
+      return _asyncResponseStatus;
     }
   }
 }
