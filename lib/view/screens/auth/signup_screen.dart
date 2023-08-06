@@ -5,13 +5,23 @@ import '../../../controller/auth_controller.dart';
 import '../../widgets/glitch.dart';
 import '../../widgets/text_input.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({Key? key}) : super(key: key);
+
+class SignUpScreen extends StatefulWidget{
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  // SignUpScreen({Key? key}) : super(key: key);
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _usernameController = new TextEditingController();
   TextEditingController _setpasswordController = new TextEditingController();
-  TextEditingController _confirmpasswordController =
-      new TextEditingController();
+  TextEditingController _confirmpasswordController = new TextEditingController();
+  late String _imageToShow = 'assets/images/blank_avatar.jpg';
+
+  @override
+  initState(){
+    _imageToShow = 'assets/images/blank_avatar.jpg';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +43,16 @@ class SignUpScreen extends StatelessWidget {
                 height: 25,
               ),
               InkWell(
-                onTap: () {
-                  AuthController.instance.pickImage();
+                onTap: () async {
+                  var imgSelected = await AuthController.instance.pickImage();
+                  setState(() {
+                    _imageToShow =  imgSelected;
+                  });
                 },
                 child: Stack(
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://st3.depositphotos.com/1767687/16607/v/450/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg"),
+                    CircleAvatar(
+                      backgroundImage: ExactAssetImage(_imageToShow),
                       radius: 60,
                     ),
                     Positioned(

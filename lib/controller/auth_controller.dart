@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../model/user.dart';
-import '../view/screens/auth/home.dart';
+import '../view/screens/calculator/home.dart';
 import '../view/screens/auth/login_screen.dart';
 import '../view/screens/auth/signup_screen.dart';
 
@@ -14,31 +14,24 @@ class AuthController extends GetxController {
   static AuthController instance = Get.find();
   File? proimg;
 
-  void pickImage() async {
-    print("IMAGE PICKED SUCCESSFULLY");
+  Future<String> pickImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-// if(image == null) return;
-
     final img = File(image!.path);
+    print("IMAGE PICKED SUCCESSFULLY");
+    print(image!.path);
     this.proimg = img;
+    return Future.delayed(Duration(seconds: 0), () => image!.path);
   }
 
-//User State Persistence
-
   late Rx<User?> _user;
-
-// _user  - Nadi
-  // _user.bindStream - Nadi Me Color Deko
-  //ever - Aap Ho
   @override
   void onReady() {
     // TODO: implement onReady
     super.onReady();
+    FirebaseAuth.instance.currentUser?.reload();
     _user = Rx<User?>(FirebaseAuth.instance.currentUser);
     _user.bindStream(FirebaseAuth.instance.authStateChanges());
     ever(_user, _setInitialView);
-
-    //Rx - Observable Keyword - Continously Checking Variable Is Changing Or Not.
   }
 
   _setInitialView(User? user) {
@@ -54,17 +47,16 @@ class AuthController extends GetxController {
   void SignUp(
       String username, String email, String password, File? image) async {
     try {
-      print("IMAGE HERE");
-      print(image.toString() == '');
-      print("IMAGE HERE");
       if (username.isNotEmpty &&
           email.isNotEmpty &&
           password.isNotEmpty &&
           image != null) {
         UserCredential credential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
-        String downloadUrl = await _uploadProPic(image);
-
+        String downloadUrl = "";
+        if(image != null) {
+          downloadUrl = await _uploadProPic(image);
+        }
         myUser user = myUser(
             name: username,
             email: email,
@@ -75,9 +67,12 @@ class AuthController extends GetxController {
             .collection('users')
             .doc(credential.user!.uid)
             .set(user.toJson());
+      } else {
+        Get.snackbar("Error", "All fields are mandatory");
       }
     } catch (e) {
       print(e);
+      print("Error Occurred username "+username);
       Get.snackbar("Error Occurred", e.toString());
     }
   }
