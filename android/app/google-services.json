@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "699059130451",
+    "project_id": "pppcalculator-589f3",
+    "storage_bucket": "pppcalculator-589f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699059130451:android:9141d08480c9f410fc76a6",
+        "android_client_info": {
+          "package_name": "com.apps.pppcalculator.pppcalculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699059130451-71v616b3nlol7l507i6enojuoujnhsee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPukl8ymIhBGEAWtin7soLi9cYwNI4D0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699059130451-71v616b3nlol7l507i6enojuoujnhsee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
