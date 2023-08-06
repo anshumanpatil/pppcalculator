@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'package:pppcalculator/controller/auth_controller.dart';
 import 'package:pppcalculator/view/widgets/glitch.dart';
 import 'package:pppcalculator/view/widgets/text_input.dart';
@@ -53,17 +51,19 @@ class LoginScreen extends StatelessWidget {
             OutlinedButton(
                 onPressed: () async {
                   EasyLoading.instance
-                    ..loadingStyle = EasyLoadingStyle.custom //This was missing in earlier code
+                    ..loadingStyle = EasyLoadingStyle
+                        .custom //This was missing in earlier code
                     ..backgroundColor = Colors.white
                     ..textColor = Colors.black
                     ..indicatorColor = Colors.green;
 
                   EasyLoading.show(status: 'Authenticating...');
-                  var stst = await AuthController.instance.login(_emailController.text, _passwordController.text);
+                  var stst = await AuthController.instance
+                      .login(_emailController.text, _passwordController.text);
 
                   EasyLoading.dismiss();
 
-                  if(stst.success) {
+                  if (stst.success) {
                     EasyLoading.showToast('Conratulations Login Successful');
                   } else {
                     EasyLoading.showToast('Login Failed');

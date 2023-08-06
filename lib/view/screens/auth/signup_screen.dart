@@ -1,15 +1,11 @@
-import 'dart:typed_data';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pppcalculator/controller/auth_controller.dart';
 import 'package:pppcalculator/view/widgets/glitch.dart';
 import 'package:pppcalculator/view/widgets/text_input.dart';
-import '../../widgets/dynamic_file.dart';
+
 import 'login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -142,7 +138,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               OutlinedButton(
                   onPressed: () async {
                     EasyLoading.instance
-                      ..loadingStyle = EasyLoadingStyle.custom //This was missing in earlier code
+                      ..loadingStyle = EasyLoadingStyle
+                          .custom //This was missing in earlier code
                       ..backgroundColor = Colors.white
                       ..textColor = Colors.black
                       ..indicatorColor = Colors.green;
@@ -156,7 +153,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         AuthController.instance.proimg);
 
                     EasyLoading.dismiss();
-
                   },
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(width: 1.0, color: Colors.white),

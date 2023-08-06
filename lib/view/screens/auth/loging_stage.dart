@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pppcalculator/view/screens/auth/login_screen.dart';
 import 'package:pppcalculator/view/widgets/custom_outlined_btn.dart';
 

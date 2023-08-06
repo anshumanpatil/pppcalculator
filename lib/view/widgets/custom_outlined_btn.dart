@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pppcalculator/constants.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
   final String myLabelText;
@@ -20,10 +19,7 @@ class CustomOutlinedButton extends StatelessWidget {
         ),
         child: Container(
             padding: EdgeInsets.symmetric(vertical: 15),
-            width: MediaQuery.of(context).size.width-100,
+            width: MediaQuery.of(context).size.width - 100,
             child: Text(myLabelText, textAlign: TextAlign.center)));
   }
 }
-
-
-

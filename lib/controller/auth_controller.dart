@@ -1,16 +1,15 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:pppcalculator/model/aync_response.dart';
 import 'package:pppcalculator/model/user.dart';
 import 'package:pppcalculator/view/screens/auth/loging_stage.dart';
-import 'package:pppcalculator/view/screens/calculator/home.dart';
 import 'package:pppcalculator/view/screens/auth/signup_screen.dart';
-
-import 'package:pppcalculator/model/aync_response.dart';
+import 'package:pppcalculator/view/screens/calculator/home.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -25,11 +24,16 @@ class AuthController extends GetxController {
 
   late Rx<User?> _user;
 
+  Future<String> SignOutUser() async {
+    await FirebaseAuth.instance.signOut();
+    return "Success";
+  }
+
   @override
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    FirebaseAuth.instance.currentUser?.reload();
+    // FirebaseAuth.instance.currentUser?.reload();
     _user = Rx<User?>(FirebaseAuth.instance.currentUser);
     _user.bindStream(FirebaseAuth.instance.authStateChanges());
     ever(_user, _setInitialView);
@@ -68,15 +72,20 @@ class AuthController extends GetxController {
             .collection('users')
             .doc(credential.user!.uid)
             .set(user.toJson());
-        return AsyncResponseStatus(success: true, errorTitle: "", errorDesc: "");
+        return AsyncResponseStatus(
+            success: true, errorTitle: "", errorDesc: "");
       } else {
         // Get.snackbar("Error", "All fields are mandatory");
-        return AsyncResponseStatus(success: false, errorTitle: "Error", errorDesc: "All fields are mandatory");
+        return AsyncResponseStatus(
+            success: false,
+            errorTitle: "Error",
+            errorDesc: "All fields are mandatory");
       }
     } catch (e) {
       print(e);
       // Get.snackbar("Error Occurred", e.toString());
-      return AsyncResponseStatus(success: false, errorTitle: "Error", errorDesc: e.toString());
+      return AsyncResponseStatus(
+          success: false, errorTitle: "Error", errorDesc: e.toString());
     }
   }
 
@@ -97,10 +106,12 @@ class AuthController extends GetxController {
   }
 
   Future<AsyncResponseStatus> login(String email, String password) async {
-    AsyncResponseStatus _asyncResponseStatus = AsyncResponseStatus(success: false, errorTitle: "", errorDesc: "");
+    AsyncResponseStatus _asyncResponseStatus =
+        AsyncResponseStatus(success: false, errorTitle: "", errorDesc: "");
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
         _asyncResponseStatus.success = true;
         return _asyncResponseStatus;
       } else {
