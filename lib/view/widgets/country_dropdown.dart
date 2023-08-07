@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
-const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+// const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
-class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
+class CountryDropDown extends StatefulWidget {
+  final String selctedCountry;
+  final List<String> list;
+  const CountryDropDown({Key? key,required this.selctedCountry, required this.list}) : super(key: key);
 
   @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+  State<CountryDropDown> createState() => _CountryDropDown();
 }
 
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  String dropdownValue = list.first;
+class _CountryDropDown extends State<CountryDropDown> {
+  String dropdownValue = "";
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      value: dropdownValue,
+      value: widget.selctedCountry,
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
       isExpanded: true,
@@ -29,7 +31,7 @@ class _DropdownButtonExampleState extends State<DropdownButtonExample> {
           dropdownValue = value!;
         });
       },
-      items: list.map<DropdownMenuItem<String>>((String value) {
+      items: widget.list.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

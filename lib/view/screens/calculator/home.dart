@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pppcalculator/controller/auth_controller.dart';
 import 'package:pppcalculator/controller/data_controller.dart';
 
@@ -9,19 +10,38 @@ import 'package:pppcalculator/view/widgets/country_dropdown.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
-
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late String defaultSelectedCountry = "";
+  late List<String> countries = [];
   @override
   void initState() {
+    // defaultSelectedCountry = "Two";
+    EasyLoading.show(status: 'Updating...');
+    var dataCountries = <String>[];
     print('initState');
     DataController.instance.fetchCountryList().then((value) {
-      print('Async done');
-      print(value);
+      for(final e in value){
+        var currentElement = e.toJson()["value"];
+        dataCountries.add(currentElement);
+        print('Async done ' + currentElement);
+      }
+      setState(() {
+        countries = dataCountries;
+        defaultSelectedCountry = countries.first;
+        EasyLoading.dismiss();
+      });
+
+
     }).catchError((onError) {
-      print('Async error');
+      setState(() {
+        countries = [""];
+        defaultSelectedCountry = "";
+        EasyLoading.dismiss();
+      });
+      print('Async error '+ onError.toString());
     });
     super.initState();
   }
@@ -41,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // Icon(Icons.arrow_back),
         title: const Text("PPP Calculator"),
         backgroundColor: Colors.grey,
-        // actions: [
+        // actions: const [
         //   Icon(Icons.outbond_outlined),
         // ],
       ),
@@ -57,33 +77,43 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 25,
               ),
-              const SizedBox(
-                height: 25,
-              ),
+
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: const DropdownButtonExample(),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: const DropdownButtonExample(),
+                child:  CountryDropDown(
+                  selctedCountry: defaultSelectedCountry,
+                  list: countries,
+                ),
               ),
               const SizedBox(
                 height: 20,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: const DropdownButtonExample(),
+                child:  CountryDropDown(
+                    selctedCountry: defaultSelectedCountry,
+                    list: countries,
+                ),
               ),
               const SizedBox(
                 height: 20,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: const DropdownButtonExample(),
+                child:  CountryDropDown(
+                  selctedCountry: defaultSelectedCountry,
+                  list: countries,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child:  CountryDropDown(
+                  selctedCountry: defaultSelectedCountry,
+                  list: countries,
+                ),
               ),
               const SizedBox(
                 height: 30,
