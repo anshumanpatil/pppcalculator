@@ -4,7 +4,7 @@ class CustomOutlinedButton extends StatelessWidget {
   final String myLabelText;
   final VoidCallback onPressed;
 
-  CustomOutlinedButton({
+  const CustomOutlinedButton({
     Key? key,
     required this.onPressed,
     required this.myLabelText,
@@ -15,10 +15,10 @@ class CustomOutlinedButton extends StatelessWidget {
     return OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          side: BorderSide(width: 1.0, color: Colors.white),
+          side: const BorderSide(width: 1.0, color: Colors.white),
         ),
         child: Container(
-            padding: EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.symmetric(vertical: 15),
             width: MediaQuery.of(context).size.width - 100,
             child: Text(myLabelText, textAlign: TextAlign.center)));
   }

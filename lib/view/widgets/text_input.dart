@@ -7,7 +7,7 @@ class TextInputField extends StatelessWidget {
   final String myLabelText;
   final bool toHide;
 
-  TextInputField({
+  const TextInputField({
     Key? key,
     required this.controller,
     required this.myIcon,

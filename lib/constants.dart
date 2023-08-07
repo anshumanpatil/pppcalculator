@@ -12,3 +12,6 @@ getRandomColor() => [
 const backgroundColor = Colors.black;
 var buttonColor = Colors.red[400];
 const borderColor = Colors.grey;
+
+const String ServerURL = "https://pppcalculator-api.onrender.com/pppdata";
+const String CountryListMethod="method=countries";

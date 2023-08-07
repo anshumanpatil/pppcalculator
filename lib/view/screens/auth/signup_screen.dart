@@ -14,11 +14,10 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   // SignUpScreen({Key? key}) : super(key: key);
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _usernameController = new TextEditingController();
-  TextEditingController _setpasswordController = new TextEditingController();
-  TextEditingController _confirmpasswordController =
-      new TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _setpasswordController = TextEditingController();
+  final TextEditingController _confirmpasswordController = TextEditingController();
   File file = File('assets/images/blank_avatar.jpg');
   late bool imageSelected = false;
   late String imgPicked = "";
@@ -33,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(top: 100),
+          margin: const EdgeInsets.only(top: 100),
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 "PPP Calculator",
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
               )),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               InkWell(
@@ -67,18 +66,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     CircleAvatar(
                       backgroundImage: imageSelected
                           ? Image.file(File(imgPicked)).image
-                          : AssetImage('assets/images/blank_avatar.jpg'),
+                          : const AssetImage('assets/images/blank_avatar.jpg'),
                       radius: 60,
                     ),
                     Positioned(
                         bottom: 0,
                         right: 0,
                         child: Container(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(50)),
-                            child: Icon(
+                            child: const Icon(
                               Icons.edit,
                               size: 20,
                               color: Colors.black,
@@ -86,18 +85,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextInputField(
                   controller: _emailController,
                   myLabelText: "Email",
                   myIcon: Icons.email,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -109,11 +108,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   toHide: true,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextInputField(
                   controller: _confirmpasswordController,
                   myLabelText: "Confirm Password",
@@ -121,18 +120,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   toHide: true,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextInputField(
                   controller: _usernameController,
                   myLabelText: "Username",
                   myIcon: Icons.person,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               OutlinedButton(
@@ -155,13 +154,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     EasyLoading.dismiss();
                   },
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(width: 1.0, color: Colors.white),
+                    side: const BorderSide(width: 1.0, color: Colors.white),
                   ),
                   child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 15),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
                       width: MediaQuery.of(context).size.width - 100,
                       child: Text("Sign Up", textAlign: TextAlign.center))),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               OutlinedButton(
@@ -170,12 +169,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(width: 1.0, color: Colors.white),
+                    side: const BorderSide(width: 1.0, color: Colors.white),
                   ),
                   child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 15),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
                       width: MediaQuery.of(context).size.width - 100,
-                      child: Text("Alrady have account? Log in",
+                      child: const Text("Alrady have account? Log in",
                           textAlign: TextAlign.center))),
             ],
           ),

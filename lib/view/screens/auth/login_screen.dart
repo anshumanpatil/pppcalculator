@@ -6,8 +6,8 @@ import 'package:pppcalculator/view/widgets/text_input.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +22,22 @@ class LoginScreen extends StatelessWidget {
               "PPP Calculator",
               style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
             )),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: TextInputField(
                 controller: _emailController,
                 myLabelText: "Email",
                 myIcon: Icons.email,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               child: TextInputField(
                 controller: _passwordController,
                 myLabelText: "Password",
@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                 toHide: true,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             OutlinedButton(
@@ -70,13 +70,13 @@ class LoginScreen extends StatelessWidget {
                   }
                 },
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(width: 1.0, color: Colors.white),
+                  side: const BorderSide(width: 1.0, color: Colors.white),
                 ),
                 child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 15),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     width: MediaQuery.of(context).size.width - 100,
-                    child: Text("Login", textAlign: TextAlign.center))),
-            SizedBox(
+                    child: const Text("Login", textAlign: TextAlign.center))),
+            const SizedBox(
               height: 10,
             ),
             OutlinedButton(
@@ -84,12 +84,12 @@ class LoginScreen extends StatelessWidget {
                   AuthController.instance.goToLogin();
                 },
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(width: 1.0, color: Colors.white),
+                  side: const BorderSide(width: 1.0, color: Colors.white),
                 ),
                 child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 15),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     width: MediaQuery.of(context).size.width - 100,
-                    child: Text("Register", textAlign: TextAlign.center)))
+                    child: const Text("Register", textAlign: TextAlign.center)))
           ],
         ),
       ),

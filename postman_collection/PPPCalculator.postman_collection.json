@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "19bff52e-5e8f-4b81-80c9-fd36de5e1ffd",
+		"name": "PPPCalculator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28147488"
+	},
+	"item": [
+		{
+			"name": "Get PPP Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pppcalculator-api.onrender.com/pppdata?method=data",
+					"protocol": "https",
+					"host": [
+						"pppcalculator-api",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"pppdata"
+					],
+					"query": [
+						{
+							"key": "method",
+							"value": "data"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get PPP Countries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pppcalculator-api.onrender.com/pppdata?method=countries",
+					"protocol": "https",
+					"host": [
+						"pppcalculator-api",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"pppdata"
+					],
+					"query": [
+						{
+							"key": "method",
+							"value": "countries"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Calculate PPP",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://pppcalculator-api.onrender.com/pppdata?method=calculate&sourceAmount=10000&sourceCountry=Afghanistan&targetCountry=Estonia",
+					"protocol": "https",
+					"host": [
+						"pppcalculator-api",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"pppdata"
+					],
+					"query": [
+						{
+							"key": "method",
+							"value": "calculate"
+						},
+						{
+							"key": "sourceAmount",
+							"value": "10000"
+						},
+						{
+							"key": "sourceCountry",
+							"value": "Afghanistan"
+						},
+						{
+							"key": "targetCountry",
+							"value": "Estonia"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

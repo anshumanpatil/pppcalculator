@@ -20,7 +20,7 @@ class LoginStage extends StatelessWidget {
               },
               myLabelText: "Use Without Login",
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             CustomOutlinedButton(
