@@ -8,14 +8,22 @@ import 'package:pppcalculator/controller/data_controller.dart';
 
 import 'package:pppcalculator/view/widgets/country_dropdown.dart';
 
+import '../../widgets/text_input.dart';
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
+
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late String defaultSelectedCountry = "";
+  // late String defaultSelectedCountry = "";
+
+  late String selectedSourceCountry = "";
+  late String selectedTargetCountry = "";
   late List<String> countries = [];
+  final TextEditingController _emailController = TextEditingController();
+
   @override
   void initState() {
     // defaultSelectedCountry = "Two";
@@ -23,25 +31,25 @@ class _HomeScreenState extends State<HomeScreen> {
     var dataCountries = <String>[];
     print('initState');
     DataController.instance.fetchCountryList().then((value) {
-      for(final e in value){
+      for (final e in value) {
         var currentElement = e.toJson()["value"];
         dataCountries.add(currentElement);
-        print('Async done ' + currentElement);
+        // print('Async done ' + currentElement);
       }
       setState(() {
         countries = dataCountries;
-        defaultSelectedCountry = countries.first;
+        selectedSourceCountry = countries.first;
+        selectedTargetCountry = countries.first;
         EasyLoading.dismiss();
       });
-
-
     }).catchError((onError) {
       setState(() {
         countries = [""];
-        defaultSelectedCountry = "";
+        selectedSourceCountry = "";
+        selectedTargetCountry = "";
         EasyLoading.dismiss();
       });
-      print('Async error '+ onError.toString());
+      print('Async error ' + onError.toString());
     });
     super.initState();
   }
@@ -61,9 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
         // Icon(Icons.arrow_back),
         title: const Text("PPP Calculator"),
         backgroundColor: Colors.grey,
-        // actions: const [
-        //   Icon(Icons.outbond_outlined),
-        // ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -73,54 +78,72 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextInputField(
+                  controller: _emailController,
+                  myLabelText: "Current Income",
+                  myIcon: Icons.monetization_on_outlined,
+                ),
+              ),
               const SizedBox(
                 height: 25,
               ),
-
+              const Text(
+                "Source Country",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Colors.deepPurple),
+              ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child:  CountryDropDown(
-                  selctedCountry: defaultSelectedCountry,
+                margin: const EdgeInsets.symmetric(horizontal: 33),
+                child: CountryDropDown(
+                  selctedCountry: selectedSourceCountry,
                   list: countries,
+                  onCountryChanged: (String v) {
+                    setState(() {
+                      selectedSourceCountry = v;
+                    });
+                  },
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
+              const Text(
+                "Target Country",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Colors.deepPurple),
+              ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child:  CountryDropDown(
-                    selctedCountry: defaultSelectedCountry,
-                    list: countries,
+                margin: const EdgeInsets.symmetric(horizontal: 33),
+                // padding: const EdgeInsets.symmetric(vertical: 15),
+                child: CountryDropDown(
+                  selctedCountry: selectedTargetCountry,
+                  list: countries,
+                  onCountryChanged: (String v) {
+                    setState(() {
+                      selectedTargetCountry = v;
+                    });
+                  },
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child:  CountryDropDown(
-                  selctedCountry: defaultSelectedCountry,
-                  list: countries,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child:  CountryDropDown(
-                  selctedCountry: defaultSelectedCountry,
-                  list: countries,
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
+              OutlinedButton(
+                  onPressed: () async {},
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(width: 1.0, color: Colors.white),
+                  ),
+                  child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      width: MediaQuery.of(context).size.width - 100,
+                      child: const Text("Calculate",
+                          textAlign: TextAlign.center))),
             ],
           ),
         ),
