@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pppcalculator/view/screens/auth/login_screen.dart';
+import 'package:pppcalculator/view/screens/calculator/home.dart';
 import 'package:pppcalculator/view/widgets/custom_outlined_btn.dart';
 
 class LoginStage extends StatelessWidget {
@@ -15,9 +16,9 @@ class LoginStage extends StatelessWidget {
           children: [
             CustomOutlinedButton(
               onPressed: () {
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
               },
-              myLabelText: "Login With Gmail",
+              myLabelText: "Use Without Login",
             ),
             SizedBox(
               height: 15,

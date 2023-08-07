@@ -1,0 +1,15 @@
+flutter_native_splash:
+  image: assets/images/exchange250.png
+  color: "000000"
+  android_12:
+    image: assets/images/exchange250.png
+    color: "000000"
+#    background_image_android: "assets/images/exchange250.png"
+#    background_image_dark_android: "assets/images/exchange250.png"
+#    background_image_ios: "assets/images/exchange250.png"
+#    background_image_dark_ios: "assets/images/exchange250.png"
+#    background_image_web: "assets/images/exchange250.png"
+#    background_image_dark_web: "assets/images/exchange250.png"
+
+  android: true
+  ios: true
