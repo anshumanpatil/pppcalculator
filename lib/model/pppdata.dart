@@ -6,8 +6,10 @@ class PPPData {
     required this.countryiso3code,
     required this.date,
   });
+
   Map<String, dynamic> toJson() =>
       {"date": date, "countryiso3code": countryiso3code};
+
   factory PPPData.fromJson(Map<String, dynamic> json) {
     return PPPData(
       date: json['date'],

@@ -16,7 +16,8 @@ class LoginStage extends StatelessWidget {
           children: [
             CustomOutlinedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
               },
               myLabelText: "Use Without Login",
             ),

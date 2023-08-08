@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-
 List<CountryListObject> countriesFromJson(String str) {
   final jsonData = json.decode(str);
-  return List<CountryListObject>.from(jsonData.map((x) => CountryListObject.fromJson(x)));
+  return List<CountryListObject>.from(
+      jsonData.map((x) => CountryListObject.fromJson(x)));
 }
 
 class CountryListObject {

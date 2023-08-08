@@ -1,14 +1,14 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pppcalculator/controller/auth_controller.dart';
 import 'package:pppcalculator/controller/data_controller.dart';
-
 import 'package:pppcalculator/view/widgets/country_dropdown.dart';
-
-import '../../widgets/text_input.dart';
+import 'package:pppcalculator/view/widgets/text_input.dart';
+import 'package:pppcalculator/view/widgets/result_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -17,12 +17,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // late String defaultSelectedCountry = "";
-
   late String selectedSourceCountry = "";
   late String selectedTargetCountry = "";
+
+  late String targetAmount = "";
+  late String sourceAmount = "";
+
   late List<String> countries = [];
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  late bool isResultVisible = false;
 
   @override
   void initState() {
@@ -49,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedTargetCountry = "";
         EasyLoading.dismiss();
       });
-      print('Async error ' + onError.toString());
+      print('Async error $onError');
     });
     super.initState();
   }
@@ -61,10 +64,26 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () async {
-            SystemNavigator.pop();
-            var stst = await AuthController.instance.SignOutUser();
-          },
+          onPressed: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text('PPP Calculator'),
+              content: const Text('Do You want to exit ?'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    SystemNavigator.pop();
+                    var stst = await AuthController.instance.SignOutUser();
+                  },
+                  child: const Text('Exit'),
+                ),
+              ],
+            ),
+          ),
         ),
         // Icon(Icons.arrow_back),
         title: const Text("PPP Calculator"),
@@ -81,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextInputField(
-                  controller: _emailController,
+                  controller: _amountController,
                   myLabelText: "Current Income",
                   myIcon: Icons.monetization_on_outlined,
                 ),
@@ -103,6 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   list: countries,
                   onCountryChanged: (String v) {
                     setState(() {
+                      isResultVisible = false;
                       selectedSourceCountry = v;
                     });
                   },
@@ -126,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   list: countries,
                   onCountryChanged: (String v) {
                     setState(() {
+                      isResultVisible = false;
                       selectedTargetCountry = v;
                     });
                   },
@@ -135,7 +156,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 20,
               ),
               OutlinedButton(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    EasyLoading.instance
+                      ..loadingStyle = EasyLoadingStyle
+                          .custom //This was missing in earlier code
+                      ..backgroundColor = Colors.white
+                      ..textColor = Colors.black
+                      ..indicatorColor = Colors.green;
+
+                    EasyLoading.show(status: 'Calculating...');
+
+                    var result = await DataController.instance.fetchResult(
+                        selectedTargetCountry,
+                        selectedSourceCountry,
+                        _amountController.text);
+                    EasyLoading.dismiss();
+                    setState(() {
+                      if (!isResultVisible) {
+                        isResultVisible = true;
+                        selectedTargetCountry = result.targetCountry;
+                        selectedSourceCountry = result.sourceCountry;
+                        sourceAmount =
+                            '${_amountController.text} ${result.sourceCountryAbbr[0].currency_code}';
+                        targetAmount =
+                            '${result.targetAmount} ${result.targetCountryAbbr[0].currency_code}';
+                      }
+                    });
+                    print(result.toJson());
+                  },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(width: 1.0, color: Colors.white),
                   ),
@@ -144,6 +192,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: MediaQuery.of(context).size.width - 100,
                       child: const Text("Calculate",
                           textAlign: TextAlign.center))),
+              const SizedBox(
+                height: 20,
+              ),
+              ResultText(
+                selectedSourceCountry: selectedSourceCountry,
+                selectedTargetCountry: selectedTargetCountry,
+                sourceAmount: targetAmount,
+                targetAmount: sourceAmount,
+                isVisible: isResultVisible,
+              ),
             ],
           ),
         ),

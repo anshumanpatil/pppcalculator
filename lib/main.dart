@@ -6,7 +6,7 @@ import 'package:pppcalculator/controller/data_controller.dart';
 import 'package:pppcalculator/view/screens/auth/signup_screen.dart';
 
 import 'constants.dart';
-import 'controller/auth_controller.dart';
+import 'package:pppcalculator/controller/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
