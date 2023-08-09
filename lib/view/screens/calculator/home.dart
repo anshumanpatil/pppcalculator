@@ -1,22 +1,24 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:pppcalculator/controller/auth_controller.dart';
 import 'package:pppcalculator/controller/data_controller.dart';
 import 'package:pppcalculator/view/widgets/country_dropdown.dart';
 import 'package:pppcalculator/view/widgets/text_input.dart';
 import 'package:pppcalculator/view/widgets/result_widget.dart';
+import 'package:pppcalculator/constants.dart' as Constants;
+
+import 'package:pppcalculator/view/widgets/drawer_menu_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  gapBetween() => const SizedBox(
+        height: 25,
+      );
   late String selectedSourceCountry = "";
   late String selectedTargetCountry = "";
 
@@ -29,10 +31,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // defaultSelectedCountry = "Two";
-    EasyLoading.show(status: 'Updating...');
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      EasyLoading.instance
+        ..loadingStyle = EasyLoadingStyle.custom
+        ..backgroundColor = Colors.white
+        ..textColor = Colors.black
+        ..indicatorColor = Colors.green;
+      EasyLoading.show(status: 'Updating...');
+    });
+
+
     var dataCountries = <String>[];
-    print('initState');
     DataController.instance.fetchCountryList().then((value) {
       for (final e in value) {
         var currentElement = e.toJson()["value"];
@@ -60,33 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerMenuWidget(),
       appBar: AppBar(
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: const Text('PPP Calculator'),
-              content: const Text('Do You want to exit ?'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    SystemNavigator.pop();
-                    var stst = await AuthController.instance.SignOutUser();
-                  },
-                  child: const Text('Exit'),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // Icon(Icons.arrow_back),
-        title: const Text("PPP Calculator"),
+        title: const Text(Constants.APP_TITLE),
         backgroundColor: Colors.grey,
       ),
       body: SingleChildScrollView(
@@ -105,9 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   myIcon: Icons.monetization_on_outlined,
                 ),
               ),
-              const SizedBox(
-                height: 25,
-              ),
+              gapBetween(),
               const Text(
                 "Source Country",
                 style: TextStyle(
@@ -128,9 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              gapBetween(),
               const Text(
                 "Target Country",
                 style: TextStyle(
@@ -152,14 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              gapBetween(),
               OutlinedButton(
                   onPressed: () async {
                     EasyLoading.instance
-                      ..loadingStyle = EasyLoadingStyle
-                          .custom //This was missing in earlier code
+                      ..loadingStyle = EasyLoadingStyle.custom
                       ..backgroundColor = Colors.white
                       ..textColor = Colors.black
                       ..indicatorColor = Colors.green;
@@ -182,7 +161,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             '${result.targetAmount} ${result.targetCountryAbbr[0].currency_code}';
                       }
                     });
-                    print(result.toJson());
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(width: 1.0, color: Colors.white),
@@ -192,9 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: MediaQuery.of(context).size.width - 100,
                       child: const Text("Calculate",
                           textAlign: TextAlign.center))),
-              const SizedBox(
-                height: 20,
-              ),
+              gapBetween(),
               ResultText(
                 selectedSourceCountry: selectedSourceCountry,
                 selectedTargetCountry: selectedTargetCountry,

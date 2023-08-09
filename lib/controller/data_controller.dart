@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +17,6 @@ class DataController extends GetxController {
       return countriesFromJson(countryList);
     }
 
-    DateTime now = DateTime.now();
     String countryListMethod = Constants.CountryListMethod;
     String url = Constants.ServerURL;
     String URLForCountryList = '$url?$countryListMethod';

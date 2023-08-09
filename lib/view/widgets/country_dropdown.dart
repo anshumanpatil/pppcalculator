@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 class CountryDropDown extends StatefulWidget {
@@ -25,15 +26,18 @@ class _CountryDropDown extends State<CountryDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: widget.selctedCountry,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      isExpanded: true,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
+    return DropdownSearch<String>(
+      popupProps: const PopupProps.menu(
+        showSearchBox: true,
+        showSelectedItems: true,
+        // disabledItemFn: (String s) => s.startsWith('I'),
+      ),
+      items: widget.list,
+      dropdownDecoratorProps: const DropDownDecoratorProps(
+        dropdownSearchDecoration: InputDecoration(
+          // labelText: "Menu mode",
+          hintText: "Select Country",
+        ),
       ),
       onChanged: (String? value) {
         widget.onCountryChanged(value!);
@@ -41,12 +45,7 @@ class _CountryDropDown extends State<CountryDropDown> {
         //   dropdownValue = value!;
         // });
       },
-      items: widget.list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
+      selectedItem: widget.selctedCountry,
     );
   }
 }

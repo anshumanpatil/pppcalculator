@@ -17,3 +17,4 @@ const String ServerURL = "https://pppcalculator-api.onrender.com/pppdata";
 const String CountryListMethod="method=countries";
 const String CalulateResultMethod="method=calculate";
 const String CountryListLocalKey="fetchCountryList";
+const String APP_TITLE="PPP Calculator";

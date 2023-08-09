@@ -35,7 +35,7 @@ class ResultText extends StatelessWidget {
               ),
               children: [
                 TextSpan(
-                  text: ' $selectedSourceCountry You need to earn ',
+                  text: ' $selectedTargetCountry You need to earn ',
                   style: const TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,
@@ -43,7 +43,7 @@ class ResultText extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: '$sourceAmount \n',
+                  text: '$sourceAmount \n\n',
                   style: const TextStyle(
                     color: Colors.white,
                     backgroundColor: Colors.teal,
@@ -51,7 +51,7 @@ class ResultText extends StatelessWidget {
                   ),
                 ),
                 const TextSpan(
-                  text: ' to maintain lifestyle, same as earning ',
+                  text: ' To maintain lifestyle, same as earning ',
                   style: TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class ResultText extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: ' in $selectedTargetCountry ',
+                  text: ' in $selectedSourceCountry ',
                   style: const TextStyle(
                     color: Colors.blue,
                     fontWeight: FontWeight.bold,

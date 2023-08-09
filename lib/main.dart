@@ -1,19 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:pppcalculator/controller/data_controller.dart';
-import 'package:pppcalculator/view/screens/auth/signup_screen.dart';
-
+import 'package:pppcalculator/view/screens/calculator/home.dart';
 import 'constants.dart';
-import 'package:pppcalculator/controller/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(DataController());
-  await Firebase.initializeApp().then((value) {
-    Get.put(AuthController());
-  });
   runApp(const MyApp());
 }
 
@@ -24,11 +18,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       builder: EasyLoading.init(),
-      title: 'PPP Calculator',
+      title: APP_TITLE,
       debugShowCheckedModeBanner: false,
       theme:
           ThemeData.dark().copyWith(scaffoldBackgroundColor: backgroundColor),
-      home: SignUpScreen(),
+      home: const HomeScreen(),
     );
   }
 }
