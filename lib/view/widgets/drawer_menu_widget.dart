@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pppcalculator/constants.dart' as Constants;
+import 'package:pppcalculator/controller/data_controller.dart';
+
+import 'package:pppcalculator/view/screens/calculator/about.dart';
 
 class DrawerMenuWidget extends StatefulWidget {
   const DrawerMenuWidget({super.key});
@@ -63,16 +66,14 @@ class _DrawerMenuWidgetState extends State<DrawerMenuWidget> {
             title: const Text('Home'),
             selected: _selectedIndex == 0,
             onTap: () {
-              _onItemTapped(0);
-              Navigator.pop(context);
+              DataController.instance.goToHome();
             },
           ),
           ListTile(
             title: const Text('About'),
             selected: _selectedIndex == 1,
             onTap: () {
-              _onItemTapped(1);
-              Navigator.pop(context);
+              DataController.instance.goToAbout();
             },
           ),
           ListTile(

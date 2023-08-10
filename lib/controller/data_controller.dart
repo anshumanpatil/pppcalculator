@@ -3,11 +3,23 @@ import 'package:http/http.dart' as http;
 
 import 'package:pppcalculator/model/country_list.dart';
 import 'package:pppcalculator/constants.dart' as Constants;
+import 'package:pppcalculator/view/screens/calculator/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pppcalculator/model/final_result.dart';
 
+import 'package:pppcalculator/view/screens/calculator/about.dart';
+
 class DataController extends GetxController {
   static DataController instance = Get.find();
+
+
+  void goToAbout() async {
+    Get.offAll(() => AboutUsPage());
+  }
+
+  void goToHome() async {
+    Get.offAll(() => HomeScreen());
+  }
 
   Future<List<CountryListObject>> fetchCountryList() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -32,6 +44,9 @@ class DataController extends GetxController {
   }
 
   Future<FinalResult> fetchResult(String selectedTargetCountry, String selectedSourceCountry, String amount) async {
+    if(amount == "") {
+      amount = "0";
+    }
     String calculateMethod = Constants.CalulateResultMethod;
     String url = Constants.ServerURL;
     String URLForCalculation = '$url?$calculateMethod&sourceAmount=$amount&sourceCountry=$selectedSourceCountry&targetCountry=$selectedTargetCountry';
@@ -39,7 +54,6 @@ class DataController extends GetxController {
     if (response.statusCode == 200) {
       return FinalResult.fromJson(response.body);
     } else {
-      print("Failed to load album");
       throw Exception('Failed to load album');
     }
   }
