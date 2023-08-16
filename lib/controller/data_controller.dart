@@ -1,25 +1,27 @@
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:pppcalculator/model/country_list.dart';
 import 'package:pppcalculator/constants.dart' as Constants;
-import 'package:pppcalculator/view/screens/calculator/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pppcalculator/model/final_result.dart';
 
-import 'package:pppcalculator/view/screens/calculator/about.dart';
+class DataController {
+  // static DataController instance = Get.find();
 
-class DataController extends GetxController {
-  static DataController instance = Get.find();
+  DataController._privateConstructor();
 
+  static final DataController _instance = DataController._privateConstructor();
 
-  void goToAbout() async {
-    Get.offAll(() => AboutUsPage());
-  }
+  static DataController get instance => _instance;
 
-  void goToHome() async {
-    Get.offAll(() => HomeScreen());
-  }
+  //
+  // void goToAbout() async {
+  //   GoRouter.of(context).push(Uri(path: '/about').toString());
+  // }
+  //
+  // void goToHome() async {
+  //   GoRouter.of(context).push(Uri(path: '/home').toString());
+  // }
 
   Future<List<CountryListObject>> fetchCountryList() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

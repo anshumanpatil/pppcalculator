@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
-import 'package:pppcalculator/controller/data_controller.dart';
-import 'package:pppcalculator/view/screens/calculator/home.dart';
+import 'package:pppcalculator/view/screens/calculator/calculator.dart';
 import 'constants.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Get.put(DataController());
-  runApp(const MyApp());
-}
+void main() => runApp(const PPPCalculator());
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class PPPCalculator extends StatelessWidget {
+  const PPPCalculator({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    // return MaterialApp.router(
+    //   builder: EasyLoading.init(),
+    //   title: APP_TITLE,
+    //   theme:
+    //       ThemeData.dark().copyWith(scaffoldBackgroundColor: backgroundColor),
+    //   debugShowCheckedModeBanner: false,
+    //   routeInformationProvider:
+    //       NyAppRouter.returnRouter(false).routeInformationProvider,
+    //   routeInformationParser:
+    //       NyAppRouter.returnRouter(false).routeInformationParser,
+    //   routerDelegate: NyAppRouter.returnRouter(false).routerDelegate,
+    // );
+
+    return MaterialApp(
       builder: EasyLoading.init(),
       title: APP_TITLE,
       debugShowCheckedModeBanner: false,
       theme:
           ThemeData.dark().copyWith(scaffoldBackgroundColor: backgroundColor),
-      home: const HomeScreen(),
+      home: const Calculator(),
     );
   }
 }

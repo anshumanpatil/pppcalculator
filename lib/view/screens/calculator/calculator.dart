@@ -9,13 +9,13 @@ import 'package:pppcalculator/constants.dart' as Constants;
 
 import 'package:pppcalculator/view/widgets/drawer_menu_widget.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Calculator extends StatefulWidget {
+  const Calculator({Key? key}) : super(key: key);
 
-  _HomeScreenState createState() => _HomeScreenState();
+  _CalculatorState createState() => _CalculatorState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _CalculatorState extends State<Calculator> {
   gapBetween() => const SizedBox(
         height: 25,
       );

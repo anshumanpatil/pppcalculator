@@ -15,6 +15,16 @@ class _AboutUsPage extends State<AboutUsPage> {
     height: 25,
   );
 
+  var imageAsset;
+
+  @override
+  void initState() {
+    super.initState();
+
+    imageAsset = AssetImage("assets/images/phoenix.png");
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +40,7 @@ class _AboutUsPage extends State<AboutUsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image(image: AssetImage("assets/images/phoenix.png")),
+              Image(image: imageAsset),
               SizedBox(height: 35),
               Text(
                 'Phoenix Info Systems LLP',

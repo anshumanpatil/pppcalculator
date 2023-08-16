@@ -1,9 +1,10 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pppcalculator/constants.dart' as Constants;
-import 'package:pppcalculator/controller/data_controller.dart';
 
-import 'package:pppcalculator/view/screens/calculator/about.dart';
+import 'package:pppcalculator/view/screens/aboutus/about.dart';
+import 'package:pppcalculator/view/screens/calculator/calculator.dart';
 
 class DrawerMenuWidget extends StatefulWidget {
   const DrawerMenuWidget({super.key});
@@ -13,6 +14,16 @@ class DrawerMenuWidget extends StatefulWidget {
 }
 
 class _DrawerMenuWidgetState extends State<DrawerMenuWidget> {
+  var imageAsset;
+
+  @override
+  void initState() {
+    super.initState();
+
+    imageAsset = AssetImage("assets/images/1024.png");
+  }
+
+
   int _selectedIndex = 0;
   Future<String?> dropOut(BuildContext context) {
     return showDialog<String>(
@@ -49,9 +60,9 @@ class _DrawerMenuWidgetState extends State<DrawerMenuWidget> {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/1024.png"),
+                image: imageAsset,
                 fit: BoxFit.fitWidth,
               ),
               color: Colors.black,
@@ -66,20 +77,42 @@ class _DrawerMenuWidgetState extends State<DrawerMenuWidget> {
             title: const Text('Home'),
             selected: _selectedIndex == 0,
             onTap: () {
-              DataController.instance.goToHome();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Calculator()),
+              );
+
             },
           ),
           ListTile(
             title: const Text('About'),
             selected: _selectedIndex == 1,
             onTap: () {
-              DataController.instance.goToAbout();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutUsPage()),
+              );
+
             },
           ),
           ListTile(
             title: const Text('Exit'),
             selected: _selectedIndex == 2,
-            onTap: () => dropOut(context),
+            onTap: () => AwesomeDialog(
+    context: context,
+    dialogType: DialogType.info,
+    animType: AnimType.rightSlide,
+    title: 'PPP Calculator',
+    desc: 'Do You want to exit ?',
+    btnCancelOnPress: () {
+
+    },
+    btnOkOnPress: () {
+      Navigator.pop(context);
+      SystemNavigator.pop();
+    },
+    )..show()
+    ,
           ),
         ],
       ),
