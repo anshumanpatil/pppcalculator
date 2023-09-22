@@ -13,7 +13,7 @@ const backgroundColor = Colors.black;
 var buttonColor = Colors.red[400];
 const borderColor = Colors.grey;
 
-const String ServerURL = "https://pppcalculator-api.onrender.com/pppdata";
+const String ServerURL = "https://qiy757a2c6ytdbqewmh5a7ofji0odvru.lambda-url.eu-north-1.on.aws";
 const String CountryListMethod="method=countries";
 const String CalulateResultMethod="method=calculate";
 const String CountryListLocalKey="fetchCountryList";
